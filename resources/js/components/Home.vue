@@ -22,7 +22,7 @@
         },
         methods:{
             logout(){
-                axios.post('/api/logout','').then(()=>{
+                axios.post('/api/logout', []).then(()=>{
                     this.$router.push({ name: "login"})
                 })
             }

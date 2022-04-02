@@ -38,9 +38,6 @@
 <script>
     export default {
         name: 'Register',
-        mounted() {
-            console.log('Register mounted.')
-        },
         data(){
             return{
                 form:{

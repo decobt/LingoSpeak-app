@@ -29,9 +29,6 @@
 <script>
     export default {
         name: 'Login',
-        mounted() {
-            console.log('Login mounted.')
-        },
         data(){
             return{
                 form:{

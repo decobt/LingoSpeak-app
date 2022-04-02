@@ -5393,7 +5393,7 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout() {
       var _this = this;
 
-      axios.post('/api/logout', '').then(function () {
+      axios.post('/api/logout', []).then(function () {
         _this.$router.push({
           name: "login"
         });
@@ -5452,9 +5452,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Login',
-  mounted: function mounted() {
-    console.log('Login mounted.');
-  },
   data: function data() {
     return {
       form: {
@@ -5531,9 +5528,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Register',
-  mounted: function mounted() {
-    console.log('Register mounted.');
-  },
   data: function data() {
     return {
       form: {

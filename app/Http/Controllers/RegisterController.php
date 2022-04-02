@@ -22,5 +22,7 @@ class RegisterController extends Controller
         $user->password = Hash::make($request->password);
         $user->email = $request->email;
         $user->save();
+
+        return response()->json('User was succesfully created.', 200);
     }
 }
