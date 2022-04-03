@@ -11286,3 +11286,46 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+#login_bg{
+    overflow: hidden;
+}
+#login_bg:before{
+    content: '';
+    background: #2b468b;
+    position: absolute;
+    top: 0;
+    left: -85%;
+    width:150%;
+    height: 150%;
+    transform: rotate(25deg);
+    border-radius: 120px;
+    -webkit-border-radius: 220px;
+    -moz-border-radius: 120px;
+    -ms-border-radius: 120px;
+    -o-border-radius: 120px;
+    -webkit-transform: rotate(25deg);
+    -moz-transform: rotate(25deg);
+    -ms-transform: rotate(25deg);
+    -o-transform: rotate(25deg);
+}
+
+#login_bg:after{
+    content: '';
+    background: #eaf3fa;
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width:150%;
+    height: 150%;
+    transform: rotate(10deg);
+    border-radius: 220px;
+    -webkit-border-radius: 220px;
+    -moz-border-radius: 220px;
+    -ms-border-radius: 220px;
+    -o-border-radius: 220px;
+    -webkit-transform: rotate(10deg);
+    -moz-transform: rotate(10deg);
+    -ms-transform: rotate(10deg);
+    -o-transform: rotate(10deg);
+    z-index: -1;
+}

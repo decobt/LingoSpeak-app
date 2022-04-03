@@ -1,4 +1,5 @@
 <template>
+<div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
     <div class="flex flex-wrap w-100 justify-center items-center">
         
         <div class="card card-default">
@@ -32,7 +33,7 @@
             </div>
         </div>
 
-    </div>
+    </div></div>
 </template>
 
 <script>
