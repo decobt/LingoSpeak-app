@@ -3,12 +3,13 @@
     <div class="flex flex-wrap w-100 justify-center items-center">
 
         <div class="flex flex-wrap justify-center items-center p-5 m-3" style="background: white; z-index:1; border-radius:30px">
-            <img src="learn.jpg" width="600" style="z-index:2" />
+            <img src="images/learn.jpg" width="600" style="z-index:2" />
             <div class="card card-default" style="border: none;background: none;">
                 <div class="card-header" style="border: none;background: none;">
                     <div class="p-2 text-2xl text-gray-800 font-semibold"><h3>Login to your account</h3></div>
                 </div>
                 <div class="card-body">
+                    <form style="max-width:300px">
                     <div class="p-2 w-100">
                         <span class="w-100 text-danger" v-if="errors.email">{{errors.email[0]}}</span>
                         <label class="w-100" for="email">Your e-mail</label>
@@ -24,6 +25,7 @@
                         <h6 class="w-100 text-center my-3">or if you don't have account</h6>
                         <router-link :to="{name: 'register' }" class="btn btn-light w-100">Register</router-link>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -45,7 +47,7 @@
         },
         methods:{
             loginUser(){
-                axios.post('/api/login', this.form).then(() =>{
+                axios.post('/api/login', this.form).then(() => {
                     this.$router.push({ name: "home"}); 
                 }).catch((error) =>{
                     this.errors = error.response.data.errors;
