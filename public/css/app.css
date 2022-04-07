@@ -11373,3 +11373,10 @@ textarea.form-control-lg {
     -o-transform: rotate(-10deg);
     z-index: -1;
 }
+.analytics, .settings{
+    text-decoration: none;
+    color: inherit;
+}
+.analytics:hover, .settings:hover, .navigation_link:hover{
+    color: #2b468b;
+}

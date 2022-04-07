@@ -23,7 +23,7 @@
                                         <div class="topic_progress w-100" style="background: #f5f3fb; height:10px; border-radius:4px">
                                             <div class="fill_progress w-75" style="background: #253e7d; height:10px; border-radius:4px"></div>
                                         </div>
-                                        <button class="btn btn-light mt-3" style="background: #fff6ec"><i class="fa-solid fa-play"></i> Start</button>
+                                        <router-link :to="{ name: 'topic', params: { topic_id: 'food' } }" class="btn btn-light mt-3" style="background: #fff6ec"><i class="fa-solid fa-play"></i> Start</router-link>
                                     </div>
                                 </div>
                             </div>
