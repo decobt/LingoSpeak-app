@@ -2,7 +2,7 @@
     <div class="min-h-screen py-4 px-4" style="width:20%">
         <div class="content flex flex-wrap flex-column align-center justify-center text-center py-4">
             <div class="py-5">
-                <img src="images/male.png" class="z-depth-2 img-fluid" style="" />
+                <img src="/images/male.png" class="z-depth-2 img-fluid" style="" />
             </div>
             <h3 class="user-title text-dark">Hi {{ user.name }}!</h3>
                     
@@ -37,7 +37,7 @@
         name: 'Sidebar',
         data(){
             return{
-                user: null
+                user: { type: Object, default: () => ({}) }
             }
         },
         methods:{

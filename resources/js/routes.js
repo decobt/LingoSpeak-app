@@ -13,9 +13,9 @@ const routes = [
         path: '',
         component: Home,
         beforeEnter: (to, from, next) => {
-            axios.get('api/athenticated').then(()=> {
+            axios.get('/api/athenticated').then(()=> {
                 next();
-            }).catch(()=> {
+            }).catch((err)=> {
                 return next({name: 'login'});
             });
         }
@@ -35,7 +35,7 @@ const routes = [
         path: '/analytics',
         component: Analytics,
         beforeEnter: (to, from, next) => {
-            axios.get('api/athenticated').then(()=> {
+            axios.get('/api/athenticated').then(()=> {
                 next();
             }).catch(()=> {
                 return next({name: 'login'});
@@ -47,7 +47,7 @@ const routes = [
         path: '/settings',
         component: Settings,
         beforeEnter: (to, from, next) => {
-            axios.get('api/athenticated').then(()=> {
+            axios.get('/api/athenticated').then(()=> {
                 next();
             }).catch(()=> {
                 return next({name: 'login'});
@@ -59,7 +59,7 @@ const routes = [
         path: '/dictionary',
         component: Dictionary,
         beforeEnter: (to, from, next) => {
-            axios.get('api/athenticated').then(()=> {
+            axios.get('/api/athenticated').then(()=> {
                 next();
             }).catch(()=> {
                 return next({name: 'login'});
@@ -71,7 +71,7 @@ const routes = [
         path: '/messages',
         component: Messages,
         beforeEnter: (to, from, next) => {
-            axios.get('api/athenticated').then(()=> {
+            axios.get('/api/athenticated').then(()=> {
                 next();
             }).catch(()=> {
                 return next({name: 'login'});
@@ -80,10 +80,10 @@ const routes = [
     },
     {
         name: 'topic',
-        path: '/:topic_id',
+        path: '/topic/:topic_id',
         component: Topic,
         beforeEnter: (to, from, next) => {
-            axios.get('api/athenticated').then(()=> {
+            axios.get('/api/athenticated').then(()=> {
                 next();
             }).catch(()=> {
                 return next({name: 'login'});

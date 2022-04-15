@@ -5494,154 +5494,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5652,7 +5504,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      user: null
+      user: null,
+      topics: null
     };
   },
   methods: {
@@ -5671,6 +5524,9 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get('/api/user').then(function (res) {
       _this2.user = res.data;
+    });
+    axios.get('/api/topics').then(function (res) {
+      _this2.topics = res.data;
     });
   }
 });
@@ -5961,6 +5817,23 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     Sidebar: _common_Sidebar_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Navigation: _common_Navigation_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      topic: {
+        type: Object,
+        "default": function _default() {
+          return {};
+        }
+      }
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/topics/' + this.$route.params.topic_id).then(function (res) {
+      _this.topic = res.data;
+    });
   }
 });
 
@@ -6054,7 +5927,12 @@ __webpack_require__.r(__webpack_exports__);
   name: 'Sidebar',
   data: function data() {
     return {
-      user: null
+      user: {
+        type: Object,
+        "default": function _default() {
+          return {};
+        }
+      }
     };
   },
   methods: {
@@ -6203,9 +6081,9 @@ var routes = [{
   path: '',
   component: _components_Home_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
   beforeEnter: function beforeEnter(to, from, next) {
-    axios.get('api/athenticated').then(function () {
+    axios.get('/api/athenticated').then(function () {
       next();
-    })["catch"](function () {
+    })["catch"](function (err) {
       return next({
         name: 'login'
       });
@@ -6224,7 +6102,7 @@ var routes = [{
   path: '/analytics',
   component: _components_Analytics_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   beforeEnter: function beforeEnter(to, from, next) {
-    axios.get('api/athenticated').then(function () {
+    axios.get('/api/athenticated').then(function () {
       next();
     })["catch"](function () {
       return next({
@@ -6237,7 +6115,7 @@ var routes = [{
   path: '/settings',
   component: _components_Settings_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
   beforeEnter: function beforeEnter(to, from, next) {
-    axios.get('api/athenticated').then(function () {
+    axios.get('/api/athenticated').then(function () {
       next();
     })["catch"](function () {
       return next({
@@ -6250,7 +6128,7 @@ var routes = [{
   path: '/dictionary',
   component: _components_Dictionary_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
   beforeEnter: function beforeEnter(to, from, next) {
-    axios.get('api/athenticated').then(function () {
+    axios.get('/api/athenticated').then(function () {
       next();
     })["catch"](function () {
       return next({
@@ -6263,7 +6141,7 @@ var routes = [{
   path: '/messages',
   component: _components_Messages_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
   beforeEnter: function beforeEnter(to, from, next) {
-    axios.get('api/athenticated').then(function () {
+    axios.get('/api/athenticated').then(function () {
       next();
     })["catch"](function () {
       return next({
@@ -6273,10 +6151,10 @@ var routes = [{
   }
 }, {
   name: 'topic',
-  path: '/:topic_id',
+  path: '/topic/:topic_id',
   component: _components_Topic_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
   beforeEnter: function beforeEnter(to, from, next) {
-    axios.get('api/athenticated').then(function () {
+    axios.get('/api/athenticated').then(function () {
       next();
     })["catch"](function () {
       return next({
@@ -29623,74 +29501,94 @@ var render = function () {
                   _vm._v("Popular Topics"),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "cards flex flex-wrap" }, [
-                  _c("div", { staticClass: "flashcard w-50" }, [
-                    _c(
+                _c(
+                  "div",
+                  { staticClass: "cards flex flex-wrap" },
+                  _vm._l(_vm.topics, function (topic) {
+                    return _c(
                       "div",
-                      {
-                        staticClass: "bg-white p-4 m-3",
-                        staticStyle: {
-                          "min-height": "200px",
-                          "border-radius": "4px",
-                        },
-                      },
+                      { key: topic.id, staticClass: "flashcard w-50" },
                       [
-                        _c("div", { staticClass: "flex flex-wrap" }, [
-                          _vm._m(0),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "w-75" },
-                            [
-                              _c("h4", [_vm._v("Food")]),
-                              _vm._v(" "),
-                              _c("p", [
-                                _vm._v(
-                                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ex elit, venenatis et porttitor in, bibendum at tortor. "
-                                ),
-                              ]),
-                              _vm._v(" "),
-                              _vm._m(1),
-                              _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "bg-white p-4 m-3",
+                            staticStyle: {
+                              "min-height": "200px",
+                              "border-radius": "4px",
+                            },
+                          },
+                          [
+                            _c("div", { staticClass: "flex flex-wrap" }, [
                               _c(
-                                "router-link",
+                                "div",
                                 {
-                                  staticClass: "btn btn-light mt-3",
-                                  staticStyle: { background: "#fff6ec" },
-                                  attrs: {
-                                    to: {
-                                      name: "topic",
-                                      params: { topic_id: "food" },
-                                    },
+                                  staticClass: "w-25",
+                                  staticStyle: {
+                                    "min-width": "110px !important",
                                   },
                                 },
                                 [
-                                  _c("i", { staticClass: "fa-solid fa-play" }),
-                                  _vm._v(" Start"),
+                                  _c(
+                                    "span",
+                                    { staticClass: "fa-stack fa-3x" },
+                                    [
+                                      _c("i", {
+                                        staticClass:
+                                          "fa-solid fa-circle fa-stack-2x",
+                                      }),
+                                      _vm._v(" "),
+                                      _c("i", {
+                                        class: [
+                                          "fa-solid fa-stack-1x fa-inverse",
+                                          topic.icon,
+                                        ],
+                                      }),
+                                    ]
+                                  ),
                                 ]
                               ),
-                            ],
-                            1
-                          ),
-                        ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "w-75" },
+                                [
+                                  _c("h4", [_vm._v(_vm._s(topic.name))]),
+                                  _vm._v(" "),
+                                  _c("p", [_vm._v(_vm._s(topic.description))]),
+                                  _vm._v(" "),
+                                  _vm._m(0, true),
+                                  _vm._v(" "),
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass: "btn btn-light mt-3",
+                                      staticStyle: { background: "#fff6ec" },
+                                      attrs: {
+                                        to: {
+                                          name: "topic",
+                                          params: { topic_id: topic.id },
+                                        },
+                                      },
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa-solid fa-play",
+                                      }),
+                                      _vm._v(" Start"),
+                                    ]
+                                  ),
+                                ],
+                                1
+                              ),
+                            ]),
+                          ]
+                        ),
                       ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _vm._m(4),
-                  _vm._v(" "),
-                  _vm._m(5),
-                  _vm._v(" "),
-                  _vm._m(6),
-                  _vm._v(" "),
-                  _vm._m(7),
-                  _vm._v(" "),
-                  _vm._m(8),
-                ]),
+                    )
+                  }),
+                  0
+                ),
               ]),
             ]
           ),
@@ -29703,24 +29601,6 @@ var render = function () {
   )
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "w-25", staticStyle: { "min-width": "110px !important" } },
-      [
-        _c("span", { staticClass: "fa-stack fa-3x" }, [
-          _c("i", { staticClass: "fa-solid fa-circle fa-stack-2x" }),
-          _vm._v(" "),
-          _c("i", {
-            staticClass: "fa-solid fa-pizza-slice fa-stack-1x fa-inverse",
-          }),
-        ]),
-      ]
-    )
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -29746,536 +29626,6 @@ var staticRenderFns = [
         }),
       ]
     )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flashcard w-50" }, [
-      _c(
-        "div",
-        {
-          staticClass: "bg-white p-4 m-3",
-          staticStyle: { "min-height": "200px", "border-radius": "4px" },
-        },
-        [
-          _c("div", { staticClass: "flex flex-wrap" }, [
-            _c(
-              "div",
-              {
-                staticClass: "w-25",
-                staticStyle: { "min-width": "110px !important" },
-              },
-              [
-                _c("span", { staticClass: "fa-stack fa-3x" }, [
-                  _c("i", { staticClass: "fa-solid fa-circle fa-stack-2x" }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass:
-                      "fa-solid fa-chess-rook fa-stack-1x fa-inverse",
-                  }),
-                ]),
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-75" }, [
-              _c("h4", [_vm._v("Adverbs")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ex elit, venenatis et porttitor in, bibendum at tortor. "
-                ),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "topic_progress w-100",
-                  staticStyle: {
-                    background: "#f5f3fb",
-                    height: "10px",
-                    "border-radius": "4px",
-                  },
-                },
-                [
-                  _c("div", {
-                    staticClass: "fill_progress w-25",
-                    staticStyle: {
-                      background: "#253e7d",
-                      height: "10px",
-                      "border-radius": "4px",
-                    },
-                  }),
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-light mt-3",
-                  staticStyle: { background: "#fff6ec" },
-                },
-                [_c("i", { staticClass: "fa-solid fa-play" }), _vm._v(" Start")]
-              ),
-            ]),
-          ]),
-        ]
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flashcard w-50" }, [
-      _c(
-        "div",
-        {
-          staticClass: "bg-white p-4 m-3",
-          staticStyle: { "min-height": "200px", "border-radius": "4px" },
-        },
-        [
-          _c("div", { staticClass: "flex flex-wrap" }, [
-            _c(
-              "div",
-              {
-                staticClass: "w-25",
-                staticStyle: { "min-width": "110px !important" },
-              },
-              [
-                _c("span", { staticClass: "fa-stack fa-3x" }, [
-                  _c("i", { staticClass: "fa-solid fa-circle fa-stack-2x" }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa-solid fa-brush fa-stack-1x fa-inverse",
-                  }),
-                ]),
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-75" }, [
-              _c("h4", [_vm._v("Adjectives")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ex elit, venenatis et porttitor in, bibendum at tortor. "
-                ),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "topic_progress w-100",
-                  staticStyle: {
-                    background: "#f5f3fb",
-                    height: "10px",
-                    "border-radius": "4px",
-                  },
-                },
-                [
-                  _c("div", {
-                    staticClass: "fill_progress w-25",
-                    staticStyle: {
-                      background: "#253e7d",
-                      height: "10px",
-                      "border-radius": "4px",
-                    },
-                  }),
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-light mt-3",
-                  staticStyle: { background: "#fff6ec" },
-                },
-                [_c("i", { staticClass: "fa-solid fa-play" }), _vm._v(" Start")]
-              ),
-            ]),
-          ]),
-        ]
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flashcard w-50" }, [
-      _c(
-        "div",
-        {
-          staticClass: "bg-white p-4 m-3",
-          staticStyle: { "min-height": "200px", "border-radius": "4px" },
-        },
-        [
-          _c("div", { staticClass: "flex flex-wrap" }, [
-            _c(
-              "div",
-              {
-                staticClass: "w-25",
-                staticStyle: { "min-width": "110px !important" },
-              },
-              [
-                _c("span", { staticClass: "fa-stack fa-3x" }, [
-                  _c("i", { staticClass: "fa-solid fa-circle fa-stack-2x" }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass:
-                      "fa-solid fa-people-group fa-stack-1x fa-inverse",
-                  }),
-                ]),
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-75" }, [
-              _c("h4", [_vm._v("Family")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ex elit, venenatis et porttitor in, bibendum at tortor. "
-                ),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "topic_progress w-100",
-                  staticStyle: {
-                    background: "#f5f3fb",
-                    height: "10px",
-                    "border-radius": "4px",
-                  },
-                },
-                [
-                  _c("div", {
-                    staticClass: "fill_progress w-50",
-                    staticStyle: {
-                      background: "#253e7d",
-                      height: "10px",
-                      "border-radius": "4px",
-                    },
-                  }),
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-light mt-3",
-                  staticStyle: { background: "#fff6ec" },
-                },
-                [_c("i", { staticClass: "fa-solid fa-play" }), _vm._v(" Start")]
-              ),
-            ]),
-          ]),
-        ]
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flashcard w-50" }, [
-      _c(
-        "div",
-        {
-          staticClass: "bg-white p-4 m-3",
-          staticStyle: { "min-height": "200px", "border-radius": "4px" },
-        },
-        [
-          _c("div", { staticClass: "flex flex-wrap" }, [
-            _c(
-              "div",
-              {
-                staticClass: "w-25",
-                staticStyle: { "min-width": "110px !important" },
-              },
-              [
-                _c("span", { staticClass: "fa-stack fa-3x" }, [
-                  _c("i", { staticClass: "fa-solid fa-circle fa-stack-2x" }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass:
-                      "fa-solid fa-pizza-slice fa-stack-1x fa-inverse",
-                  }),
-                ]),
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-75" }, [
-              _c("h4", [_vm._v("Food")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ex elit, venenatis et porttitor in, bibendum at tortor. "
-                ),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "topic_progress w-100",
-                  staticStyle: {
-                    background: "#f5f3fb",
-                    height: "10px",
-                    "border-radius": "4px",
-                  },
-                },
-                [
-                  _c("div", {
-                    staticClass: "fill_progress w-75",
-                    staticStyle: {
-                      background: "#253e7d",
-                      height: "10px",
-                      "border-radius": "4px",
-                    },
-                  }),
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-light mt-3",
-                  staticStyle: { background: "#fff6ec" },
-                },
-                [_c("i", { staticClass: "fa-solid fa-play" }), _vm._v(" Start")]
-              ),
-            ]),
-          ]),
-        ]
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flashcard w-50" }, [
-      _c(
-        "div",
-        {
-          staticClass: "bg-white p-4 m-3",
-          staticStyle: { "min-height": "200px", "border-radius": "4px" },
-        },
-        [
-          _c("div", { staticClass: "flex flex-wrap" }, [
-            _c(
-              "div",
-              {
-                staticClass: "w-25",
-                staticStyle: { "min-width": "110px !important" },
-              },
-              [
-                _c("span", { staticClass: "fa-stack fa-3x" }, [
-                  _c("i", { staticClass: "fa-solid fa-circle fa-stack-2x" }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass:
-                      "fa-solid fa-chess-rook fa-stack-1x fa-inverse",
-                  }),
-                ]),
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-75" }, [
-              _c("h4", [_vm._v("Adverbs")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ex elit, venenatis et porttitor in, bibendum at tortor. "
-                ),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "topic_progress w-100",
-                  staticStyle: {
-                    background: "#f5f3fb",
-                    height: "10px",
-                    "border-radius": "4px",
-                  },
-                },
-                [
-                  _c("div", {
-                    staticClass: "fill_progress w-25",
-                    staticStyle: {
-                      background: "#253e7d",
-                      height: "10px",
-                      "border-radius": "4px",
-                    },
-                  }),
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-light mt-3",
-                  staticStyle: { background: "#fff6ec" },
-                },
-                [_c("i", { staticClass: "fa-solid fa-play" }), _vm._v(" Start")]
-              ),
-            ]),
-          ]),
-        ]
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flashcard w-50" }, [
-      _c(
-        "div",
-        {
-          staticClass: "bg-white p-4 m-3",
-          staticStyle: { "min-height": "200px", "border-radius": "4px" },
-        },
-        [
-          _c("div", { staticClass: "flex flex-wrap" }, [
-            _c(
-              "div",
-              {
-                staticClass: "w-25",
-                staticStyle: { "min-width": "110px !important" },
-              },
-              [
-                _c("span", { staticClass: "fa-stack fa-3x" }, [
-                  _c("i", { staticClass: "fa-solid fa-circle fa-stack-2x" }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa-solid fa-brush fa-stack-1x fa-inverse",
-                  }),
-                ]),
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-75" }, [
-              _c("h4", [_vm._v("Adjectives")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ex elit, venenatis et porttitor in, bibendum at tortor. "
-                ),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "topic_progress w-100",
-                  staticStyle: {
-                    background: "#f5f3fb",
-                    height: "10px",
-                    "border-radius": "4px",
-                  },
-                },
-                [
-                  _c("div", {
-                    staticClass: "fill_progress w-25",
-                    staticStyle: {
-                      background: "#253e7d",
-                      height: "10px",
-                      "border-radius": "4px",
-                    },
-                  }),
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-light mt-3",
-                  staticStyle: { background: "#fff6ec" },
-                },
-                [_c("i", { staticClass: "fa-solid fa-play" }), _vm._v(" Start")]
-              ),
-            ]),
-          ]),
-        ]
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flashcard w-50" }, [
-      _c(
-        "div",
-        {
-          staticClass: "bg-white p-4 m-3",
-          staticStyle: { "min-height": "200px", "border-radius": "4px" },
-        },
-        [
-          _c("div", { staticClass: "flex flex-wrap" }, [
-            _c(
-              "div",
-              {
-                staticClass: "w-25",
-                staticStyle: { "min-width": "110px !important" },
-              },
-              [
-                _c("span", { staticClass: "fa-stack fa-3x" }, [
-                  _c("i", { staticClass: "fa-solid fa-circle fa-stack-2x" }),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass:
-                      "fa-solid fa-people-group fa-stack-1x fa-inverse",
-                  }),
-                ]),
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "w-75" }, [
-              _c("h4", [_vm._v("Family")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ex elit, venenatis et porttitor in, bibendum at tortor. "
-                ),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "topic_progress w-100",
-                  staticStyle: {
-                    background: "#f5f3fb",
-                    height: "10px",
-                    "border-radius": "4px",
-                  },
-                },
-                [
-                  _c("div", {
-                    staticClass: "fill_progress w-50",
-                    staticStyle: {
-                      background: "#253e7d",
-                      height: "10px",
-                      "border-radius": "4px",
-                    },
-                  }),
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-light mt-3",
-                  staticStyle: { background: "#fff6ec" },
-                },
-                [_c("i", { staticClass: "fa-solid fa-play" }), _vm._v(" Start")]
-              ),
-            ]),
-          ]),
-        ]
-      ),
-    ])
   },
 ]
 render._withStripped = true
@@ -30950,7 +30300,11 @@ var render = function () {
             [
               _c("div", { staticClass: "content my-5 my-5" }, [
                 _c("h2", { staticClass: "title text-dark" }, [
-                  _vm._v("Topic " + _vm._s(_vm.$route.params.topic_id)),
+                  _vm._v("Topic " + _vm._s(_vm.topic.name)),
+                ]),
+                _vm._v(" "),
+                _c("h5", { staticStyle: { margin: "25px 0" } }, [
+                  _vm._v(_vm._s(_vm.topic.description)),
                 ]),
               ]),
             ]
@@ -31193,7 +30547,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "py-5" }, [
       _c("img", {
         staticClass: "z-depth-2 img-fluid",
-        attrs: { src: "images/male.png" },
+        attrs: { src: "/images/male.png" },
       }),
     ])
   },

@@ -5,8 +5,8 @@
 
             <div class="min-h-screen py-5 px-5" style="background: #eaf3fa; width:65%">
                 <div class="content my-5 my-5">
-                    <h2 class="title text-dark">Topic {{ $route.params.topic_id }}</h2>
-
+                    <h2 class="title text-dark">Topic {{ topic.name }}</h2>
+                    <h5 style="margin: 25px 0">{{ topic.description }}</h5>
                 </div>
             </div>
 
@@ -23,6 +23,16 @@
         components: {
             Sidebar,
             Navigation
+        },
+        data(){
+            return{
+                topic: { type: Object, default: () => ({}) }
+            }
+        },
+        mounted(){
+            axios.get('/api/topics/' + this.$route.params.topic_id).then((res)=>{
+                this.topic = res.data
+            })
         }
     }
 </script>
