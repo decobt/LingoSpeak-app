@@ -30,6 +30,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('/topics', [\App\Http\Controllers\TopicController::class, 'get_topics'])->name('topics');
     Route::get('/topics/{id}', [\App\Http\Controllers\TopicController::class, 'get_topic_by_id'])->where('id', '[0-9]+')->name('topic_by_id');
+
+    Route::get('/questions/{id}', [\App\Http\Controllers\QuestionController::class, 'questions_by_topic_id'])->where('id', '[0-9]+')->name('questions_by_topic_id');
 });
 
 

@@ -7,9 +7,49 @@
                 <div class="content my-5 my-5">
                     <h2 class="title text-dark">Topic {{ topic.name }}</h2>
                     <h5 style="margin: 25px 0">{{ topic.description }}</h5>
+
+                    <div v-if="questions.length > count">
+                        <p>{{ questions[count].question }}</p>
+                        <label
+                        v-for="(answer, index) in JSON.parse(questions[count].choices)"
+                        :key="index"
+                        :for="index"
+                        class="block mt-4 border rounded-lg py-2 px-6 text-lg"
+                        :class="[{'hover:bg-secondary cursor-pointer' : selectedAnswer == ''}, {'bg-success bg-opacity-75' : index == questions[count].answer && selectedAnswer != ''}, {'bg-danger bg-opacity-75' : selectedAnswer == index && index != questions[count].answer }]"
+                        >
+                            <input
+                                :id="index"
+                                type="radio"
+                                class="hidden"
+                                :value="index"
+                                :disabled="selectedAnswer != ''"
+                                @change="answered($event)"
+                            />
+                            {{answer}}
+                        </label>
+
+                        <button
+                            @click="nextQuestion"
+                            v-show="selectedAnswer != ''"
+                            class="float-right bg-indigo-600 text-white text-sm font-bold tracking-wide rounded-full px-5 py-2"
+                        >
+                            Next &gt;
+                        </button>
+                    </div>
+                    <div v-else>
+                        <h2 class="text-bold text-3xl">Results</h2>
+                        <div class="flex justify-start space-x-4 mt-6">
+                            <p>
+                                Correct Answers:
+                                <span class="text-2xl text-green-700 font-bold">{{correctAnswers}}</span>
+                            </p>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
-
+            
             <Sidebar/>
         </div>
     </div>
@@ -26,13 +66,40 @@
         },
         data(){
             return{
-                topic: { type: Object, default: () => ({}) }
+                topic: { type: Object, default: () => ({}) },
+                questions: { type: Object, default: () => ({}) },
+                count: 0,
+                selectedAnswer: '',
+                correctAnswers: 0
             }
         },
         mounted(){
             axios.get('/api/topics/' + this.$route.params.topic_id).then((res)=>{
                 this.topic = res.data
-            })
+            });
+
+            axios.get('/api/questions/' + this.$route.params.topic_id).then((res)=>{
+                this.questions = res.data
+            });
+
+        },
+        methods: {
+            answered(e) {
+                this.selectedAnswer = e.target.value;
+
+                if (this.selectedAnswer == this.questions[this.count].answer) {
+                    this.correctAnswers++;
+                    console.log('correct answer');
+                } else {
+                    //this.wrongAnswers++;
+                    console.log('wrong answer');
+                }
+            },
+            nextQuestion() {
+                this.count++;
+                this.selectedAnswer = '';
+                document.querySelectorAll("input").forEach((el) => (el.checked = false));
+            }
         }
     }
 </script>
