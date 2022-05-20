@@ -8,43 +8,45 @@
                     <h2 class="title text-dark">Topic {{ topic.name }}</h2>
                     <h5 style="margin: 25px 0">{{ topic.description }}</h5>
 
-                    <div v-if="questions.length > count">
-                        <p>{{ questions[count].question }}</p>
-                        <label
-                        v-for="(answer, index) in JSON.parse(questions[count].choices)"
-                        :key="index"
-                        :for="index"
-                        class="block mt-4 border rounded-lg py-2 px-6 text-lg"
-                        :class="[{'hover:bg-secondary cursor-pointer' : selectedAnswer == ''}, {'bg-success bg-opacity-75' : index == questions[count].answer && selectedAnswer != ''}, {'bg-danger bg-opacity-75' : selectedAnswer == index && index != questions[count].answer }]"
-                        >
-                            <input
-                                :id="index"
-                                type="radio"
-                                class="hidden"
-                                :value="index"
-                                :disabled="selectedAnswer != ''"
-                                @change="answered($event)"
-                            />
-                            {{answer}}
-                        </label>
+                    <div class="quiz flex flex-wrap justify-center items-center p-5 m-3" style="background-color: white; z-index: 1; border-radius: 30px;">
+                        <div v-if="questions.length > count">
+                            <h3>{{ questions[count].question }}</h3>
+                            <label
+                            v-for="(answer, index) in JSON.parse(questions[count].choices)"
+                            :key="index"
+                            :for="index"
+                            class="mt-3 border rounded-lg py-2 px-6 text-lg"
+                            :class="[{'hover:bg-secondary cursor-pointer' : selectedAnswer == ''}, {'bg-success bg-opacity-75' : index == questions[count].answer && selectedAnswer != ''}, {'bg-danger bg-opacity-75' : selectedAnswer == index && index != questions[count].answer }]"
+                            style="display:block"
+                            >
+                                <input
+                                    :id="index"
+                                    type="radio"
+                                    class="hidden"
+                                    :value="index"
+                                    :disabled="selectedAnswer != ''"
+                                    @change="answered($event)"
+                                />
+                                {{answer}}
+                            </label>
 
-                        <button
-                            @click="nextQuestion"
-                            v-show="selectedAnswer != ''"
-                            class="float-right bg-indigo-600 text-white text-sm font-bold tracking-wide rounded-full px-5 py-2"
-                        >
-                            Next &gt;
-                        </button>
-                    </div>
-                    <div v-else>
-                        <h2 class="text-bold text-3xl">Results</h2>
-                        <div class="flex justify-start space-x-4 mt-6">
-                            <p>
-                                Correct Answers:
-                                <span class="text-2xl text-green-700 font-bold">{{correctAnswers}}</span>
-                            </p>
+                            <button
+                                @click="nextQuestion"
+                                v-show="selectedAnswer != ''"
+                                class="mt-4 bg-indigo-600 text-black text-sm font-bold tracking-wide rounded-full px-5 py-2"
+                            >
+                                Next &gt;
+                            </button>
                         </div>
+                        <div v-else>
 
+                            <h2 class="text-bold text-3xl">Results</h2>
+                            <div class="flex justify-start space-x-4 mt-6">
+                                <h5>Correct Answers:
+                                <span class="text-2xl text-green-700 font-bold">{{correctAnswers}}</span></h5>
+                            </div>
+
+                        </div>
                     </div>
 
                 </div>

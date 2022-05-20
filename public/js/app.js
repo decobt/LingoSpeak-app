@@ -5850,6 +5850,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -30379,116 +30381,134 @@ var render = function () {
                   _vm._v(_vm._s(_vm.topic.description)),
                 ]),
                 _vm._v(" "),
-                _vm.questions.length > _vm.count
-                  ? _c(
-                      "div",
-                      [
-                        _c("p", [
-                          _vm._v(_vm._s(_vm.questions[_vm.count].question)),
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(
-                          JSON.parse(_vm.questions[_vm.count].choices),
-                          function (answer, index) {
-                            return _c(
-                              "label",
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "quiz flex flex-wrap justify-center items-center p-5 m-3",
+                    staticStyle: {
+                      "background-color": "white",
+                      "z-index": "1",
+                      "border-radius": "30px",
+                    },
+                  },
+                  [
+                    _vm.questions.length > _vm.count
+                      ? _c(
+                          "div",
+                          [
+                            _c("h3", [
+                              _vm._v(_vm._s(_vm.questions[_vm.count].question)),
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(
+                              JSON.parse(_vm.questions[_vm.count].choices),
+                              function (answer, index) {
+                                return _c(
+                                  "label",
+                                  {
+                                    key: index,
+                                    staticClass:
+                                      "mt-3 border rounded-lg py-2 px-6 text-lg",
+                                    class: [
+                                      {
+                                        "hover:bg-secondary cursor-pointer":
+                                          _vm.selectedAnswer == "",
+                                      },
+                                      {
+                                        "bg-success bg-opacity-75":
+                                          index ==
+                                            _vm.questions[_vm.count].answer &&
+                                          _vm.selectedAnswer != "",
+                                      },
+                                      {
+                                        "bg-danger bg-opacity-75":
+                                          _vm.selectedAnswer == index &&
+                                          index !=
+                                            _vm.questions[_vm.count].answer,
+                                      },
+                                    ],
+                                    staticStyle: { display: "block" },
+                                    attrs: { for: index },
+                                  },
+                                  [
+                                    _c("input", {
+                                      staticClass: "hidden",
+                                      attrs: {
+                                        id: index,
+                                        type: "radio",
+                                        disabled: _vm.selectedAnswer != "",
+                                      },
+                                      domProps: { value: index },
+                                      on: {
+                                        change: function ($event) {
+                                          return _vm.answered($event)
+                                        },
+                                      },
+                                    }),
+                                    _vm._v(
+                                      "\n                            " +
+                                        _vm._s(answer) +
+                                        "\n                        "
+                                    ),
+                                  ]
+                                )
+                              }
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
                               {
-                                key: index,
-                                staticClass:
-                                  "block mt-4 border rounded-lg py-2 px-6 text-lg",
-                                class: [
+                                directives: [
                                   {
-                                    "hover:bg-secondary cursor-pointer":
-                                      _vm.selectedAnswer == "",
-                                  },
-                                  {
-                                    "bg-success bg-opacity-75":
-                                      index ==
-                                        _vm.questions[_vm.count].answer &&
-                                      _vm.selectedAnswer != "",
-                                  },
-                                  {
-                                    "bg-danger bg-opacity-75":
-                                      _vm.selectedAnswer == index &&
-                                      index != _vm.questions[_vm.count].answer,
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.selectedAnswer != "",
+                                    expression: "selectedAnswer != ''",
                                   },
                                 ],
-                                attrs: { for: index },
+                                staticClass:
+                                  "mt-4 bg-indigo-600 text-black text-sm font-bold tracking-wide rounded-full px-5 py-2",
+                                on: { click: _vm.nextQuestion },
                               },
                               [
-                                _c("input", {
-                                  staticClass: "hidden",
-                                  attrs: {
-                                    id: index,
-                                    type: "radio",
-                                    disabled: _vm.selectedAnswer != "",
-                                  },
-                                  domProps: { value: index },
-                                  on: {
-                                    change: function ($event) {
-                                      return _vm.answered($event)
-                                    },
-                                  },
-                                }),
                                 _vm._v(
-                                  "\n                        " +
-                                    _vm._s(answer) +
-                                    "\n                    "
+                                  "\n                            Next >\n                        "
                                 ),
                               ]
-                            )
-                          }
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.selectedAnswer != "",
-                                expression: "selectedAnswer != ''",
-                              },
-                            ],
-                            staticClass:
-                              "float-right bg-indigo-600 text-white text-sm font-bold tracking-wide rounded-full px-5 py-2",
-                            on: { click: _vm.nextQuestion },
-                          },
-                          [
-                            _vm._v(
-                              "\n                        Next >\n                    "
                             ),
-                          ]
-                        ),
-                      ],
-                      2
-                    )
-                  : _c("div", [
-                      _c("h2", { staticClass: "text-bold text-3xl" }, [
-                        _vm._v("Results"),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "flex justify-start space-x-4 mt-6" },
-                        [
-                          _c("p", [
-                            _vm._v(
-                              "\n                            Correct Answers:\n                            "
-                            ),
-                            _c(
-                              "span",
-                              {
-                                staticClass:
-                                  "text-2xl text-green-700 font-bold",
-                              },
-                              [_vm._v(_vm._s(_vm.correctAnswers))]
-                            ),
+                          ],
+                          2
+                        )
+                      : _c("div", [
+                          _c("h2", { staticClass: "text-bold text-3xl" }, [
+                            _vm._v("Results"),
                           ]),
-                        ]
-                      ),
-                    ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "flex justify-start space-x-4 mt-6",
+                            },
+                            [
+                              _c("h5", [
+                                _vm._v(
+                                  "Correct Answers:\n                            "
+                                ),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "text-2xl text-green-700 font-bold",
+                                  },
+                                  [_vm._v(_vm._s(_vm.correctAnswers))]
+                                ),
+                              ]),
+                            ]
+                          ),
+                        ]),
+                  ]
+                ),
               ]),
             ]
           ),
