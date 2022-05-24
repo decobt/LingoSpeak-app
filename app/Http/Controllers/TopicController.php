@@ -47,7 +47,11 @@ class TopicController extends Controller
      */
     public function set_score(Request $request)
     {
-        $progress = new Progress();
+        $progress = Progress::where('topic_id', '=', $request->topic_id)->where('user_id','=', $request->user_id)->first();
+        if ($progress === null) {
+            $progress = new Progress();
+        }
+        
         $progress->topic_id = $request->topic_id;
         $progress->user_id = $request->user_id;
         $progress->score = $request->score;
