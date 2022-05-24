@@ -1,3 +1,6 @@
+.w-0 {
+    width: 0 !important;
+}
 #login_bg{
     overflow: hidden;
 }

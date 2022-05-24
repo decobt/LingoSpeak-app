@@ -72,10 +72,15 @@
                 questions: { type: Object, default: () => ({}) },
                 count: 0,
                 selectedAnswer: '',
-                correctAnswers: 0
+                correctAnswers: 0,
+                user: ''
             }
         },
         mounted(){
+            axios.get('/api/user').then((res)=>{
+                this.user = res.data
+            });
+
             axios.get('/api/topics/' + this.$route.params.topic_id).then((res)=>{
                 this.topic = res.data
             });
@@ -85,22 +90,38 @@
             });
 
         },
+        watch: {
+            'count': function(value, mutation) {
+                if(this.questions.length <= value){
+                    this.submitScore();
+                }   
+            }
+        },
         methods: {
             answered(e) {
                 this.selectedAnswer = e.target.value;
 
                 if (this.selectedAnswer == this.questions[this.count].answer) {
                     this.correctAnswers++;
-                    console.log('correct answer');
+                    //console.log('correct answer');
                 } else {
                     //this.wrongAnswers++;
-                    console.log('wrong answer');
+                    //console.log('wrong answer');
                 }
             },
             nextQuestion() {
                 this.count++;
                 this.selectedAnswer = '';
                 document.querySelectorAll("input").forEach((el) => (el.checked = false));
+            },
+            submitScore(){
+                axios.post('/api/score', {
+                    topic_id: this.$route.params.topic_id,
+                    user_id: this.user.id,
+                    score: this.correctAnswers
+                }).then((response) => {
+                    //console.log(response);
+                })
             }
         }
     }

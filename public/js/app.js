@@ -5876,12 +5876,16 @@ __webpack_require__.r(__webpack_exports__);
       },
       count: 0,
       selectedAnswer: '',
-      correctAnswers: 0
+      correctAnswers: 0,
+      user: ''
     };
   },
   mounted: function mounted() {
     var _this = this;
 
+    axios.get('/api/user').then(function (res) {
+      _this.user = res.data;
+    });
     axios.get('/api/topics/' + this.$route.params.topic_id).then(function (res) {
       _this.topic = res.data;
     });
@@ -5889,16 +5893,21 @@ __webpack_require__.r(__webpack_exports__);
       _this.questions = res.data;
     });
   },
+  watch: {
+    'count': function count(value, mutation) {
+      if (this.questions.length <= value) {
+        this.submitScore();
+      }
+    }
+  },
   methods: {
     answered: function answered(e) {
       this.selectedAnswer = e.target.value;
 
       if (this.selectedAnswer == this.questions[this.count].answer) {
-        this.correctAnswers++;
-        console.log('correct answer');
-      } else {
-        //this.wrongAnswers++;
-        console.log('wrong answer');
+        this.correctAnswers++; //console.log('correct answer');
+      } else {//this.wrongAnswers++;
+        //console.log('wrong answer');
       }
     },
     nextQuestion: function nextQuestion() {
@@ -5906,6 +5915,14 @@ __webpack_require__.r(__webpack_exports__);
       this.selectedAnswer = '';
       document.querySelectorAll("input").forEach(function (el) {
         return el.checked = false;
+      });
+    },
+    submitScore: function submitScore() {
+      axios.post('/api/score', {
+        topic_id: this.$route.params.topic_id,
+        user_id: this.user.id,
+        score: this.correctAnswers
+      }).then(function (response) {//console.log(response);
       });
     }
   }
@@ -29631,7 +29648,30 @@ var render = function () {
                                   _vm._v(" "),
                                   _c("p", [_vm._v(_vm._s(topic.description))]),
                                   _vm._v(" "),
-                                  _vm._m(0, true),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "topic_progress w-100",
+                                      staticStyle: {
+                                        background: "#f5f3fb",
+                                        height: "10px",
+                                        "border-radius": "4px",
+                                      },
+                                    },
+                                    [
+                                      _c("div", {
+                                        class: [
+                                          "fill_progress",
+                                          "w-" + topic.progress,
+                                        ],
+                                        staticStyle: {
+                                          background: "#253e7d",
+                                          height: "10px",
+                                          "border-radius": "4px",
+                                        },
+                                      }),
+                                    ]
+                                  ),
                                   _vm._v(" "),
                                   _c(
                                     "router-link",
@@ -29674,34 +29714,7 @@ var render = function () {
     ]
   )
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "topic_progress w-100",
-        staticStyle: {
-          background: "#f5f3fb",
-          height: "10px",
-          "border-radius": "4px",
-        },
-      },
-      [
-        _c("div", {
-          staticClass: "fill_progress w-75",
-          staticStyle: {
-            background: "#253e7d",
-            height: "10px",
-            "border-radius": "4px",
-          },
-        }),
-      ]
-    )
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
