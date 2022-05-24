@@ -36,6 +36,13 @@ class QuestionSeeder extends Seeder
         ]);
 
         DB::table('questions')->insert([
+            'question' => 'What is the name for "water"?',
+            'choices' => json_encode([ 'a' => 'patate', 'b'=> 'domate', 'c'=> 'banane', 'd'=> 'ujë' ]),
+            'answer' => 'd',
+            'topic_id' => 23 //food
+        ]);
+
+        DB::table('questions')->insert([
             'question' => 'What is the name for "father"?',
             'choices' => json_encode([ 'a' => 'vëlla', 'b'=> 'motra', 'c'=> 'babai', 'd'=> 'nënë' ]),
             'answer' => 'c',
@@ -85,6 +92,13 @@ class QuestionSeeder extends Seeder
         ]);
 
         DB::table('questions')->insert([
+            'question' => 'What is the name for "green" color?',
+            'choices' => json_encode([ 'a' => 'i/e gjelbër', 'b'=> 'i/e zezë', 'c'=> 'i/e verdhe', 'd'=> 'i/e kaltër' ]),
+            'answer' => 'a',
+            'topic_id' => 25 //colors
+        ]);
+
+        DB::table('questions')->insert([
             'question' => 'What is the name for number "six"?',
             'choices' => json_encode([ 'a' => 'katër', 'b'=> 'shtatë', 'c'=> 'nëntë', 'd'=> 'gjashtë' ]),
             'answer' => 'd',
@@ -101,6 +115,13 @@ class QuestionSeeder extends Seeder
         DB::table('questions')->insert([
             'question' => 'What is the name for number "seven"?',
             'choices' => json_encode([ 'a' => 'shtatë', 'b'=> 'katër', 'c'=> 'gjashtë', 'd'=> 'nëntë' ]),
+            'answer' => 'a',
+            'topic_id' => 26 //numbers
+        ]);
+
+        DB::table('questions')->insert([
+            'question' => 'What is the name for number "four"?',
+            'choices' => json_encode([ 'a' => 'katër', 'b'=> 'një', 'c'=> 'pesë', 'd'=> 'nëntë' ]),
             'answer' => 'a',
             'topic_id' => 26 //numbers
         ]);
@@ -123,6 +144,13 @@ class QuestionSeeder extends Seeder
             'question' => 'What is the name for "table"?',
             'choices' => json_encode([ 'a' => 'divan', 'b'=> 'shampon', 'c'=> 'tavolinë', 'd'=> 'dush' ]),
             'answer' => 'c',
+            'topic_id' => 27 //nouns
+        ]);
+
+        DB::table('questions')->insert([
+            'question' => 'What is the name for "window"?',
+            'choices' => json_encode([ 'a' => 'karrige', 'b'=> 'filxhan', 'c'=> 'bukë', 'd'=> 'dritare' ]),
+            'answer' => 'd',
             'topic_id' => 27 //nouns
         ]);
 
@@ -176,6 +204,13 @@ class QuestionSeeder extends Seeder
         ]);
 
         DB::table('questions')->insert([
+            'question' => 'What is the name for "inside"?',
+            'choices' => json_encode([ 'a' => 'jashtë', 'b'=> 'brenda', 'c'=> 'afër', 'd'=> 'zakonisht' ]),
+            'answer' => 'b',
+            'topic_id' => 29 //adverbs
+        ]);
+
+        DB::table('questions')->insert([
             'question' => 'What is the name for "little"?',
             'choices' => json_encode([ 'a' => 'i/e vjetër', 'b'=> 'i/e vogël', 'c'=> 'i/e sëmure', 'd'=> 'i/e lirë' ]),
             'answer' => 'b',
@@ -193,6 +228,13 @@ class QuestionSeeder extends Seeder
             'question' => 'What is the name for "sick"?',
             'choices' => json_encode([ 'a' => 'i/e sëmure', 'b'=> 'i/e vjetër', 'c'=> 'i/e madh(e)', 'd'=> 'i/e vogël' ]),
             'answer' => 'a',
+            'topic_id' => 30 //adjectives
+        ]);
+
+        DB::table('questions')->insert([
+            'question' => 'What is the name for "sad"?',
+            'choices' => json_encode([ 'a' => 'i/e mirë', 'b'=> 'i/e lirë', 'c'=> 'i/e vogël', 'd'=> 'i/e trishtuar' ]),
+            'answer' => 'd',
             'topic_id' => 30 //adjectives
         ]);
     }
